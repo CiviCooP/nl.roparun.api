@@ -6,8 +6,8 @@
 	* [Deelnemende teams](#deelnemende-teams)
 	* [Deelnemers van een team](#deelnemers-van-een-team)
 	* [Donaties, Collecte en Loterij](#donaties-collecte-en-loterij)
-- [RoparunTeam.get - Lijstje met teams](#roparunTeam.get-lijstje-met-teams)
-- [RoparunTeam.details - Detail overzicht van een team](#RoparunTeam.details - Detail overzicht van een team)
+- [RoparunTeam.get - Lijstje met teams](#roparunteamget---lijstje-met-teams)
+- [RoparunTeam.details - Detail overzicht van een team](#roparunteamdetails---detail-overzicht-van-een-team)
 
 Voor de integratie met de website zijn er 2 custom API's ontwikkeld.
 
