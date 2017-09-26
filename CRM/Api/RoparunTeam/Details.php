@@ -130,8 +130,8 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		if($teamDao->fetch()) {
 			$team = array();
 			$team['id'] = $teamDao->id;
-			$team['name'] = $teamDao->display_name;
-			$team['teamnr'] = $teamDao->team_name;
+			$team['name'] = $teamDao->team_name;
+			$team['teamnr'] = $teamDao->team_nr;
 			$team['city'] = $teamDao->city;
 			$team['country'] = $teamDao->country;
 			$team['website'] = $teamDao->website;
