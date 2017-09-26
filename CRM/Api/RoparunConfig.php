@@ -24,6 +24,8 @@ class CRM_Api_RoparunConfig {
 	private $_teamDataCustomGroupTableName;
 	private $_teamNrCustomFieldId;
 	private $_teamNrCustomFieldColumnName;
+	private $_teamNameCustomFieldId;
+	private $_teamNameCustomFieldColumnName;
 	private $_donatedTowardsCustomGroupId;
 	private $_donatedTowardsCustomGroupTableName;
 	private $_towardsTeamCustomFieldId;
@@ -172,6 +174,20 @@ class CRM_Api_RoparunConfig {
 	 */
 	public function getTeamNrCustomFieldColumnName() {
 		return $this->_teamNrCustomFieldColumnName;
+	}
+	
+	/**
+	 * Getter for the id of the custom field team_name.
+	 */
+	public function getTeamNameCustomFieldId() {
+		return $this->_teamNameCustomFieldId;
+	}
+	
+	/**
+	 * Getter for the column name of the custom field team_name.
+	 */
+	public function getTeamNameCustomFieldColumnName() {
+		return $this->_teamNameCustomFieldColumnName;
 	}
 	
 	/**
@@ -561,6 +577,13 @@ class CRM_Api_RoparunConfig {
 			$this->_teamNrCustomFieldId = $_teamNrCustomField['id'];
 		} catch (Exception $ex) {
 			throw new Exception('Could not find custom field Team NR');
+		}
+		try {
+			$_teamNameCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'team_name', 'custom_group_id' => $this->_teamDataCustomGroupId));
+			$this->_teamNameCustomFieldColumnName = $_teamNameCustomField['column_name'];
+			$this->_teamNameCustomFieldId = $_teamNameCustomField['id'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom field Team Name');
 		}
 		
 		try {

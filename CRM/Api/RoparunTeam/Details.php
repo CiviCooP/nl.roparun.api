@@ -90,6 +90,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		$teamSql = "SELECT civicrm_contact.id, 
   						 civicrm_contact.display_name,
   						 `{$config->getTeamDataCustomGroupTableName()}`.`{$config->getTeamNrCustomFieldColumnName()}` AS `team_nr`,
+  						 `{$config->getTeamDataCustomGroupTableName()}`.`{$config->getTeamNameCustomFieldColumnName()}` AS `team_name`,
   						 civicrm_address.city as city,
   						 civicrm_country.name as country,
   						 website.url as website,
@@ -130,7 +131,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			$team = array();
 			$team['id'] = $teamDao->id;
 			$team['name'] = $teamDao->display_name;
-			$team['teamnr'] = $teamDao->team_nr;
+			$team['teamnr'] = $teamDao->team_name;
 			$team['city'] = $teamDao->city;
 			$team['country'] = $teamDao->country;
 			$team['website'] = $teamDao->website;
