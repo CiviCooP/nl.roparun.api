@@ -15,7 +15,7 @@
 Voor de integratie met de website zijn er 2 custom API's ontwikkeld.
 
 * *RoparunTeam.get* haalt een lijstje met teams op
-* *RoparunTeam.details* haalt de details van team op; zoals deelnemers en wie er hoeveel gedoneerd heeft.
+* *RoparunTeam.getdetails* haalt de details van team op; zoals deelnemers en wie er hoeveel gedoneerd heeft.
 
 ## Gegevens opbouw in CiviCRM
 
