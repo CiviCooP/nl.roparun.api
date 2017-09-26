@@ -2,6 +2,6 @@
 
 This extensions provides two custom API's for Roparun:
 * _RoparunTeam.get_ Gets a list with all the teams
-* _RoparunTeam.details_ Gets a detailed overview of an individual team.
+* _RoparunTeam.getdetails_ Gets a detailed overview of an individual team.
 
 See [docs in Dutch](docs/api.md)

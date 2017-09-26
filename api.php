@@ -7,7 +7,7 @@ function api_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissio
 	// The data exposed through this api is used on the public facing website.
 	// So the data is public anyway. With other words there is no data leak.
 	$permissions['roparun_team']['get'] = array();
-	$permissions['roparun_team']['details'] = array();
+	$permissions['roparun_team']['getdetails'] = array();
 }
 
 /**

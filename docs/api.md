@@ -110,7 +110,7 @@ Resultaat ziet er zo uit:
 
 De ID's verwijzen naar contact ids in civicrm. En is nodig om de detail informatie van het team op te halen.
 
-## RoparunTeam.details - Detail overzicht van een team
+## RoparunTeam.getdetails - Detail overzicht van een team
 
 Detail overzicht van een team geeft team informatie terug, de deelnemers, en alle donaties op naam van dit team.
 
@@ -164,7 +164,7 @@ Van iedere donateur wordt de volgende informatie teruggegeven:
 Een aaroep ziet er dan ongeveer zo uit:
 
 ````
-http://roparun.local.com/sites/all/modules/civicrm/extern/rest.php?entity=RoparunTeam&action=details&team_id=25&api_key=userkey&key=sitekey
+http://roparun.local.com/sites/all/modules/civicrm/extern/rest.php?entity=RoparunTeam&action=getdetails&team_id=25&api_key=userkey&key=sitekey
 ````
 
 Resultaat ziet er zo uit:

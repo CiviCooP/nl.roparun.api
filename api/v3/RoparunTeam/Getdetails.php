@@ -8,7 +8,7 @@
  * @return void
  * @see http://wiki.civicrm.org/confluence/display/CRMDOC/API+Architecture+Standards
  */
-function _civicrm_api3_roparun_team_Details_spec(&$spec) {
+function _civicrm_api3_roparun_team_Getdetails_spec(&$spec) {
 	$spec['team_id'] = array(
     'api.aliases' => array('id'),
     'api.required' => true,
@@ -31,7 +31,7 @@ function _civicrm_api3_roparun_team_Details_spec(&$spec) {
  * @see civicrm_api3_create_error
  * @throws API_Exception
  */
-function civicrm_api3_roparun_team_Details($params) {
+function civicrm_api3_roparun_team_Getdetails($params) {
 	$details = new CRM_Api_RoparunTeam_Details();
 	$event_id = null;
 	if (isset($params['event_id'])) {
