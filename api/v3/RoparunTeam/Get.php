@@ -9,7 +9,11 @@
  * @see http://wiki.civicrm.org/confluence/display/CRMDOC/API+Architecture+Standards
  */
 function _civicrm_api3_roparun_team_Get_spec(&$spec) {
-  
+	$spec['event_id'] = array(
+    'api.required' => true,
+    'title' => 'Event ID',
+    'type' => CRM_Utils_Type::T_INT,
+  );
 }
 
 /**
@@ -23,6 +27,10 @@ function _civicrm_api3_roparun_team_Get_spec(&$spec) {
  */
 function civicrm_api3_roparun_team_Get($params) {
 	$overview = new CRM_Api_RoparunTeam_Overview();
+	$event_id = null;
+	if (isset($params['event_id'])) {
+		$event_id = $params['event_id'];
+	}
 	$returnValues = $overview->overview();
 	return civicrm_api3_create_success($returnValues, $params, 'RoparunTeam', 'get');
 }

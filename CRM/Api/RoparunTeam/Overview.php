@@ -2,9 +2,12 @@
 
 class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 	
-	public function overview() {
+	public function overview($event_id=null) {
+		$roparun_event_id = $event_id;
+		if (empty($roparun_event_id)) {
+			$roparun_event_id = $this->getCurrentRoparunEventId();
+		}
 		$config = CRM_Api_RoparunConfig::singleton();
-		$roparun_event_id = $this->getCurrentRoparunEventId();
 		$campaign_id = $this->getRoparunCampaignId($roparun_event_id);
 		
 		$teamSql = "SELECT civicrm_contact.id, 

@@ -2,8 +2,11 @@
 
 class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 	
-	public function details($team_id) {
-		$roparun_event_id = $this->getCurrentRoparunEventId();
+	public function details($team_id, $event_id = null) {
+		$roparun_event_id = $event_id;
+		if (empty($roparun_event_id)) {
+			$roparun_event_id = $this->getCurrentRoparunEventId();
+		}
 		$team['info'] = $this->getTeamInfo($team_id, $roparun_event_id);
 		$team['members'] = $this->getTeamMembers($team_id, $roparun_event_id);
 		$team['donations'] = $this->getDonations($team_id, $roparun_event_id);

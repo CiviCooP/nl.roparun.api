@@ -15,6 +15,11 @@ function _civicrm_api3_roparun_team_Details_spec(&$spec) {
     'title' => 'Contact ID of the team',
     'type' => CRM_Utils_Type::T_INT,
   );
+	$spec['event_id'] = array(
+    'api.required' => true,
+    'title' => 'Event ID',
+    'type' => CRM_Utils_Type::T_INT,
+  );
 }
 
 /**
@@ -28,6 +33,10 @@ function _civicrm_api3_roparun_team_Details_spec(&$spec) {
  */
 function civicrm_api3_roparun_team_Details($params) {
 	$details = new CRM_Api_RoparunTeam_Details();
-	$returnValues = $details->details($params['team_id']);
+	$event_id = null;
+	if (isset($params['event_id'])) {
+		$event_id = $params['event_id'];
+	}
+	$returnValues = $details->details($params['team_id'], $event_id);
 	return civicrm_api3_create_success($returnValues, $params, 'RoparunTeam', 'Details');
 }
