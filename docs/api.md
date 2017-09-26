@@ -2,7 +2,7 @@
 
 ## Inhoudspogave
 
-- [Gegevens opbouw in CiviCRM](#Gegevens opbouw in CiviCRM)
+- [Gegevens opbouw in CiviCRM](#gegevens-opbouw-in-civicrm)
 	* [Deelnemende teams](#Deelnemende teams)
 	* [Deelnemers van een team](#Deelnemers van een team)
 	* [Donaties, Collecte en Loterij](#Donaties, Collecte en Loterij)
