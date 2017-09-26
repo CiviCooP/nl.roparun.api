@@ -16,7 +16,7 @@ function _civicrm_api3_roparun_team_Details_spec(&$spec) {
     'type' => CRM_Utils_Type::T_INT,
   );
 	$spec['event_id'] = array(
-    'api.required' => true,
+    'api.required' => false,
     'title' => 'Event ID',
     'type' => CRM_Utils_Type::T_INT,
   );

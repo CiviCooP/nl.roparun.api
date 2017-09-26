@@ -71,7 +71,6 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		$teamMembersDao = CRM_Core_DAO::executeQuery($teamMemberSql, $params);
 		while ($teamMembersDao->fetch()) {
 			$teamMember = array();
-			$teamMember['id'] = $teamMembersDao->id;
 			$teamMember['name'] = $teamMembersDao->display_name;
 			$teamMember['city'] = $teamMembersDao->city;
 			$teamMember['role'] = $teamMembersDao->role;

@@ -10,7 +10,7 @@
  */
 function _civicrm_api3_roparun_team_Get_spec(&$spec) {
 	$spec['event_id'] = array(
-    'api.required' => true,
+    'api.required' => false,
     'title' => 'Event ID',
     'type' => CRM_Utils_Type::T_INT,
   );
@@ -31,6 +31,6 @@ function civicrm_api3_roparun_team_Get($params) {
 	if (isset($params['event_id'])) {
 		$event_id = $params['event_id'];
 	}
-	$returnValues = $overview->overview();
+	$returnValues = $overview->overview($event_id);
 	return civicrm_api3_create_success($returnValues, $params, 'RoparunTeam', 'get');
 }
