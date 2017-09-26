@@ -3,11 +3,11 @@
 ## Inhoudspogave
 
 - [Gegevens opbouw in CiviCRM](#gegevens-opbouw-in-civicrm)
-	* [Deelnemende teams](#Deelnemende teams)
-	* [Deelnemers van een team](#Deelnemers van een team)
-	* [Donaties, Collecte en Loterij](#Donaties, Collecte en Loterij)
-- [RoparunTeam.get - Lijstje met teams](#RoparunTeam.get - Lijstje met teams)
-- [RoparunTeam.details - Detail overzicht van een team] (#RoparunTeam.details - Detail overzicht van een team)
+	* [Deelnemende teams](#deelnemende-teams)
+	* [Deelnemers van een team](#deelnemers-van-een-team)
+	* [Donaties, Collecte en Loterij](#donaties-collecte-en-loterij)
+- [RoparunTeam.get - Lijstje met teams](#roparunTeam.get-lijstje-met-teams)
+- [RoparunTeam.details - Detail overzicht van een team](#RoparunTeam.details - Detail overzicht van een team)
 
 Voor de integratie met de website zijn er 2 custom API's ontwikkeld.
 
