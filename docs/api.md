@@ -6,6 +6,7 @@
 	* [Deelnemende teams](#deelnemende-teams)
 	* [Deelnemers van een team](#deelnemers-van-een-team)
 	* [Donaties, Collecte en Loterij](#donaties-collecte-en-loterij)
+- [Toegangsrechten API](#toegangsrechten-api)
 - [RoparunTeam.get - Lijstje met teams](#roparunteamget---lijstje-met-teams)
 	* [Hoe te gebruiken?](#hoe-te-gebruiken)
 - [RoparunTeam.details - Detail overzicht van een team](#roparunteamdetails---detail-overzicht-van-een-team)
@@ -35,6 +36,10 @@ Deelnemers van een team staan geregistreed als deelnemer met de rol _Teamlid_ op
 Een donatie, collecte en loterij zijn in CiviCRM als bijdrages vastgelegd met een apart financieel type. Bij de bijdrage geef je aan voor welk team het is en eventueel tbv van welk teamlid. 
 De bijdrage is ook gekoppeld aan de campagne waar het evenement onder valt.  
 Bij bijdrages van het type donatie wordt ook vastgelegd of de naam van de donateur vermeld mag worden of deze anoniem moet blijven. 
+
+## Toegangsrechten API
+
+Deze API heeft geen permissies of toegangsrechten nodig. Wel heb je een _site_key_ en _api_key_ nodig als je deze api over REST wil gebruiken.
 
 ## RoparunTeam.get - Lijstje met teams
 
