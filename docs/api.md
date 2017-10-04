@@ -110,6 +110,35 @@ Resultaat ziet er zo uit:
 
 De ID's verwijzen naar contact ids in civicrm. En is nodig om de detail informatie van het team op te halen.
 
+## RoparunTeam.gettotal - Totaalinformatie
+
+Deze API geeft de totaalstand van de donaties terug. De totaalstand bestaat uit
+
+* Totaal voor het hele evenement
+* Totaal op naam van Roparun
+* Totaal op naam van een team
+
+De totaalstand gaat per Roparun Evenement. Eventueel kan je een Roparun Evenement doorgeven met _event_id_. Als die niet is opgegeven wordt het eerst volgende roparun evenement gebruikt. Het eerste volgende roparun evenement duurt tot de datum ingevuld in het custom veld 'Doneren tot'
+
+### Hoe te gebruiken?
+
+Een aaroep ziet er dan ongeveer zo uit:
+
+````
+http://roparun.local.com/sites/all/modules/civicrm/extern/rest.php?entity=RoparunTeam&action=getottal&api_key=userkey&key=sitekey
+````
+
+Resultaat ziet er zo uit:
+````
+{
+    "total_amount": 320,
+    "total_amount_teams": 310,
+    "total_amount_roparun": 10,
+    "is_error": "0",
+    "version": 3
+}
+````
+
 ## RoparunTeam.getdetails - Detail overzicht van een team
 
 Detail overzicht van een team geeft team informatie terug, de deelnemers, en alle donaties op naam van dit team.
@@ -156,6 +185,7 @@ Van ieder teamlid wordt de volgende informatie teruggegeven:
 Van iedere donateur wordt de volgende informatie teruggegeven:
 
 * Naam donateur, eventueel anoniem als de donateur dat heeft aangegeven
+* Woonplaats donateur, leeg als donateur heeft aangegeven anoniem te willen doneren
 * Tbv team lid, leeg als er alleen op naam van team is gedoneerd
 * Bedrag
 
@@ -219,16 +249,19 @@ Resultaat ziet er zo uit:
                 {
                     "donor": "Anoniem",
                     "team_member": "Mark Tuitert",
+                    "city": "",
                     "amount": "10.00"
                 },
                 {
                     "donor": "jaap.jansma@civicoop.org",
                     "team_member": "",
+                    "city": "Arnhem",
                     "amount": "10.00"
                 },
                 {
                     "donor": "jaap.jansma@civicoop.org",
                     "team_member": "Sven Kramer",
+                    "city": "Ede",
                     "amount": "210.00"
                 }
             ]

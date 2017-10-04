@@ -75,5 +75,20 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 		}
 		return $teams;
 	}
+
+	public function gettotal($event_id=null) {
+		$roparun_event_id = $event_id;
+		if (empty($roparun_event_id)) {
+			$roparun_event_id = $this->getCurrentRoparunEventId();
+		}
+		$config = CRM_Api_RoparunConfig::singleton();
+		$campaign_id = $this->getRoparunCampaignId($roparun_event_id);
+		
+		$total['total_amount'] = $this->getTotalAmountDonated($campaign_id);
+		$total['total_amount_teams'] = $this->getTotalAmountDonatedForTeams($campaign_id);
+		$total['total_amount_roparun'] = $this->getTotalAmountDonatedForRoparun($campaign_id);
+		
+		return $total;
+	}
 	
 }
