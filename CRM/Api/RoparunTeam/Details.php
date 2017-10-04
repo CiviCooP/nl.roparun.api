@@ -20,12 +20,14 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		$donationsSql = "SELECT total_amount,
 										team_member.display_name as team_member, 
 										donor.display_name as donor,
+										address.city as city,
 										donor_info.{$config->getDonateAnonymousCustomFieldColumnName()} as anonymous_donation 
 										FROM civicrm_contribution
 										INNER JOIN civicrm_contact donor ON civicrm_contribution.contact_id = donor.id
 										INNER JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
 										LEFT JOIN civicrm_contact as team_member ON team_member.id = donated_towards.{$config->getTowardsTeamMemberCustomFieldColumnName()}
 										LEFT JOIN {$config->getDonorInformationCustomGroupTableName()} donor_info ON donor_info.entity_id = civicrm_contribution.id
+										LEFT JOIN civicrm_address address ON donor.id = address.contact_id and address.is_primary = 1
 										WHERE donated_towards.{$config->getTowardsTeamCustomFieldColumnName()} = %1
 										AND civicrm_contribution.campaign_id = %2
 										AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
@@ -39,10 +41,12 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		while ($donationsDao->fetch()) {
 			$donation = array();
 			$donation['donor'] = $donationsDao->donor;
+			$donation['city'] = $donationsDao->city;
 			$donation['team_member'] = $donationsDao->team_member ? $donationsDao->team_member : "";
 			$donation['amount'] = $donationsDao->total_amount;
 			if ($donationsDao->anonymous_donation == $config->getDonateAnonymousOptionValue()) {
 				$donation['donor'] = ts('Anonymous');
+				$donation['city'] = '';
 			}
 			$donations[] = $donation;
 		}
