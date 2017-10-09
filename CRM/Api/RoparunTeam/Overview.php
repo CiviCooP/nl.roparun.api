@@ -45,7 +45,8 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 							 LEFT JOIN civicrm_website twitter ON twitter.contact_id = civicrm_contact.id and twitter.website_type_id = {$config->getTwitterWebsiteTypeId()}
 							 LEFT JOIN civicrm_website vine ON vine.contact_id = civicrm_contact.id and vine.website_type_id = {$config->getVineWebsiteTypeId()}
   						 WHERE civicrm_participant_status_type.class = 'Positive' AND civicrm_participant_status_type.is_active = 1
-  						 AND civicrm_participant.event_id = %1 AND civicrm_participant.role_id = %2";
+  						 AND civicrm_participant.event_id = %1 AND civicrm_participant.role_id = %2
+  						 ORDER BY team_name, team_nr";
 	  $teamParams[1] = array($roparun_event_id, 'Integer');
 	  $teamParams[2] = array($config->getTeamParticipantRoleId(), 'Integer');
 		$teamDao = CRM_Core_DAO::executeQuery($teamSql, $teamParams);

@@ -57,6 +57,7 @@ class CRM_Api_RoparunTeam {
 				SELECT SUM(total_amount) 
 				FROM civicrm_contribution
 				WHERE civicrm_contribution.campaign_id = %1
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %2";
 			$params[1] = array($campaign_id, 'Integer');
@@ -92,6 +93,7 @@ class CRM_Api_RoparunTeam {
 				LEFT JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
 				WHERE (donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` IS NULL OR donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` = 0)
 				AND civicrm_contribution.campaign_id = %1
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %2";
 			$params[1] = array($campaign_id, 'Integer');
@@ -126,6 +128,7 @@ class CRM_Api_RoparunTeam {
 				LEFT JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
 				WHERE (donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` IS NOT NULL AND donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` != 0)
 				AND civicrm_contribution.campaign_id = %1
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %2";
 			$params[1] = array($campaign_id, 'Integer');
@@ -161,6 +164,7 @@ class CRM_Api_RoparunTeam {
 				INNER JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
 				WHERE donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` = %1
 				AND civicrm_contribution.campaign_id = %2
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %3";
 			$params[1] = array($team_id, 'Integer');
@@ -195,6 +199,7 @@ class CRM_Api_RoparunTeam {
 				INNER JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
 				WHERE donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` = %1
 				AND donated_towards.{$config->getTowardsTeamMemberCustomFieldColumnName()} IS NULL
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.campaign_id = %2
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %3
@@ -232,6 +237,7 @@ class CRM_Api_RoparunTeam {
 				WHERE donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` = %1
 				AND donated_towards.{$config->getTowardsTeamMemberCustomFieldColumnName()} IS NOT NULL
 				AND civicrm_contribution.campaign_id = %2
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %3
 				";
@@ -267,6 +273,7 @@ class CRM_Api_RoparunTeam {
 				INNER JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
 				WHERE donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` = %1
 				AND civicrm_contribution.campaign_id = %2
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %3";
 			$params[1] = array($team_id, 'Integer');
@@ -301,6 +308,7 @@ class CRM_Api_RoparunTeam {
 				INNER JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
 				WHERE donated_towards.`{$config->getTowardsTeamCustomFieldColumnName()}` = %1
 				AND civicrm_contribution.campaign_id = %2
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %3";
 			$params[1] = array($team_id, 'Integer');
@@ -335,6 +343,7 @@ class CRM_Api_RoparunTeam {
 				INNER JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
 				WHERE donated_towards.`{$config->getTowardsTeamMemberCustomFieldColumnName()}` = %1
 				AND civicrm_contribution.campaign_id = %2
+				AND civicrm_contribution.is_test = 0
 				AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 				AND civicrm_contribution.contribution_status_id = %3";
 			$params[1] = array($contact_id, 'Integer');

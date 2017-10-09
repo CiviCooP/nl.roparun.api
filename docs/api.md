@@ -9,8 +9,12 @@
 - [Toegangsrechten API](#toegangsrechten-api)
 - [RoparunTeam.get - Lijstje met teams](#roparunteamget---lijstje-met-teams)
 	* [Hoe te gebruiken?](#hoe-te-gebruiken)
-- [RoparunTeam.getdetails - Detail overzicht van een team](#roparunteamgetdetails---detail-overzicht-van-een-team)
+- [RoparunTeam.gettotal - Totaalinformatie](#roparunteam.gettotal---totaalinformatie)
 	* [Hoe te gebruiken?](#hoe-te-gebruiken-1)
+- [RoparunTeam.getdetails - Detail overzicht van een team](#roparunteamgetdetails---detail-overzicht-van-een-team)
+	* [Hoe te gebruiken?](#hoe-te-gebruiken-2)
+- [RoparunTeam.getmembers - Overzicht van teamleden](#roparunteamgetmembers---overzicht-van-teamleden)
+	* [Hoe te gebruiken?](#hoe-te-gebruiken-3)
 
 Voor de integratie met de website zijn er 2 custom API's ontwikkeld.
 
@@ -233,12 +237,14 @@ Resultaat ziet er zo uit:
             },
             "members": [
                 {
+                   "id": 27,
                     "name": "Sven Kramer",
                     "city": null,
                     "role": "Chaffeur",
                     "total_amount": 210
                 },
                 {
+                		"id": 26,
                     "name": "Mark Tuitert",
                     "city": "Kamerik",
                     "role": "Teamcaptain",
@@ -265,6 +271,52 @@ Resultaat ziet er zo uit:
                     "amount": "210.00"
                 }
             ]
+        }
+    ]
+}
+````
+
+## RoparunTeam.getmembers - Overzicht van teamleden
+
+Overzicht van leden van een team. 
+
+*Optioneel* kun je een het event_id meegegevn als je historische gegevens wil hebben.
+
+Van ieder teamlid wordt de volgende informatie teruggegeven:
+
+* Naam
+* Functie
+* Woonplaats
+
+### Hoe te gebruiken?
+
+Een aaroep ziet er dan ongeveer zo uit:
+
+````
+http://roparun.local.com/sites/all/modules/civicrm/extern/rest.php?entity=RoparunTeam&action=getmembers&team_id=25&api_key=userkey&key=sitekey
+````
+
+Resultaat ziet er zo uit:
+````
+     {
+
+
+    "is_error": 0,
+    "version": 3,
+    "count": 1,
+    "id": 25,
+    "values": [
+        {
+        		"id": 26,
+            "name": "Sven Kramer",
+            "city": null,
+            "role": "Chaffeur",
+        },
+        {
+        		"id": 27,
+            "name": "Mark Tuitert",
+            "city": "Kamerik",
+            "role": "Teamcaptain",
         }
     ]
 }

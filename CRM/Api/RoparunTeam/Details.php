@@ -8,9 +8,17 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			$roparun_event_id = $this->getCurrentRoparunEventId();
 		}
 		$team['info'] = $this->getTeamInfo($team_id, $roparun_event_id);
-		$team['members'] = $this->getTeamMembers($team_id, $roparun_event_id);
+		$team['members'] = $this->getTeamMembers($team_id, $roparun_event_id, true);
 		$team['donations'] = $this->getDonations($team_id, $roparun_event_id);
 		return array($team_id => $team);
+	}
+	
+	public function members($team_id, $event_id = null) {
+		$roparun_event_id = $event_id;
+		if (empty($roparun_event_id)) {
+			$roparun_event_id = $this->getCurrentRoparunEventId();
+		}
+		return $this->getTeamMembers($team_id, $roparun_event_id, false);
 	}
 	
 	protected function getDonations($team_id, $event_id) {
@@ -30,6 +38,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 										LEFT JOIN civicrm_address address ON donor.id = address.contact_id and address.is_primary = 1
 										WHERE donated_towards.{$config->getTowardsTeamCustomFieldColumnName()} = %1
 										AND civicrm_contribution.campaign_id = %2
+										AND civicrm_contribution.is_test = 0
 										AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
 										AND civicrm_contribution.contribution_status_id = %3
 										";
@@ -53,7 +62,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		return $donations;
 	}
 	
-	protected function getTeamMembers($team_id, $event_id) {
+	protected function getTeamMembers($team_id, $event_id, $includeDonationTotals) {
 		$config = CRM_Api_RoparunConfig::singleton();
 		$campaign_id = $this->getRoparunCampaignId($event_id);
 		
@@ -67,7 +76,8 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			INNER JOIN {$config->getTeamMemberDataCustomGroupTableName()} team_member_data ON team_member_data.entity_id = civicrm_participant.id
 			LEFT JOIN civicrm_address ON civicrm_address.contact_id = civicrm_contact.id AND civicrm_address.is_primary = 1
 			WHERE team_member_data.{$config->getMemberOfTeamCustomFieldColumnName()} = %1
-			AND civicrm_participant.event_id = %2 	
+			AND civicrm_participant.event_id = %2 
+			ORDER BY civicrm_contact.display_name	
 		";
 		$params[1] = array($team_id, 'Integer');
 		$params[2] = array($event_id, 'Integer');
@@ -75,10 +85,13 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		$teamMembersDao = CRM_Core_DAO::executeQuery($teamMemberSql, $params);
 		while ($teamMembersDao->fetch()) {
 			$teamMember = array();
+			$teamMember['id'] = $teamMembersDao->id;
 			$teamMember['name'] = $teamMembersDao->display_name;
 			$teamMember['city'] = $teamMembersDao->city;
 			$teamMember['role'] = $teamMembersDao->role;
-			$teamMember['total_amount'] = $this->getTotalAmountDonatedForTeamMember($teamMembersDao->id, $campaign_id);
+			if ($includeDonationTotals) {
+				$teamMember['total_amount'] = $this->getTotalAmountDonatedForTeamMember($teamMembersDao->id, $campaign_id);
+			}
 			$teamMembers[] = $teamMember;
 		}
 		return $teamMembers;
