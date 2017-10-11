@@ -30,7 +30,7 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
   						 FROM civicrm_contact 
   						 INNER JOIN civicrm_participant ON civicrm_participant.contact_id = civicrm_contact.id 
   						 INNER JOIN civicrm_participant_status_type ON civicrm_participant.status_id = civicrm_participant_status_type.id
-  						 LEFT JOIN civicrm_address ON civicrm_address.contact_id = civicrm_contact.id AND civicrm_address.is_primary = 1
+  						 LEFT JOIN civicrm_address ON civicrm_address.contact_id = civicrm_contact.id AND civicrm_address.location_type_id = %1
   						 LEFT JOIN civicrm_country ON civicrm_country.id = civicrm_address.country_id
   						 LEFT JOIN `{$config->getTeamDataCustomGroupTableName()}` ON `{$config->getTeamDataCustomGroupTableName()}`.entity_id = civicrm_participant.id
   						 LEFT JOIN civicrm_website website ON website.contact_id = civicrm_contact.id and website.website_type_id = {$config->getWebsiteWebsiteTypeId()}
@@ -45,10 +45,11 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 							 LEFT JOIN civicrm_website twitter ON twitter.contact_id = civicrm_contact.id and twitter.website_type_id = {$config->getTwitterWebsiteTypeId()}
 							 LEFT JOIN civicrm_website vine ON vine.contact_id = civicrm_contact.id and vine.website_type_id = {$config->getVineWebsiteTypeId()}
   						 WHERE civicrm_participant_status_type.class = 'Positive' AND civicrm_participant_status_type.is_active = 1
-  						 AND civicrm_participant.event_id = %1 AND civicrm_participant.role_id = %2
+  						 AND civicrm_participant.event_id = %2 AND civicrm_participant.role_id = %3
   						 ORDER BY team_name, team_nr";
-	  $teamParams[1] = array($roparun_event_id, 'Integer');
-	  $teamParams[2] = array($config->getTeamParticipantRoleId(), 'Integer');
+	  $teamParams[1] = array($config->getVestingsplaatsLocationTypeId(), 'Integer');
+	  $teamParams[2] = array($roparun_event_id, 'Integer');
+	  $teamParams[3] = array($config->getTeamParticipantRoleId(), 'Integer');
 		$teamDao = CRM_Core_DAO::executeQuery($teamSql, $teamParams);
 		$returnValues = array();
 		while($teamDao->fetch()) {

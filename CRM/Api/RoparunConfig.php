@@ -49,6 +49,7 @@ class CRM_Api_RoparunConfig {
 	private $_donateAnonymousOptionValue;
 	private $_teamParticipantRoleId;
 	private $_teammemberParticipantRoleId;
+	private $_vestigingsLocationTypeId;
 	
 	private function __construct() {
 		$this->loadWebsiteTypes();
@@ -100,6 +101,14 @@ class CRM_Api_RoparunConfig {
 			));
 		} catch (Exception $ex) {
 			throw new Exception ('Could not retrieve the option value Anonymous for option group anonymous donation');
+		}
+		try {
+			$this->_vestigingsLocationTypeId = civicrm_api3('LocationType', 'getvalue', array(
+				'return' => 'id',
+				'name' => 'Vestigingsplaats',
+			));
+		} catch (Exception $ex) {
+			throw new Exception('Could not find Vestigingsadres location type id');
 		}
 	}
 	
@@ -416,6 +425,13 @@ class CRM_Api_RoparunConfig {
 	 */
 	public function getTeamMemberParticipantRoleId() {
 		return $this->_teammemberParticipantRoleId;
+	}
+	
+	/**
+	 * Getter for vestigingsplaats location type id.
+	 */
+	public function getVestingsplaatsLocationTypeId() {
+		return $this->_vestigingsLocationTypeId;
 	}
 	
 	private function loadWebsiteTypes() {

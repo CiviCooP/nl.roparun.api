@@ -124,7 +124,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
   						 FROM civicrm_contact 
   						 INNER JOIN civicrm_participant ON civicrm_participant.contact_id = civicrm_contact.id 
   						 INNER JOIN civicrm_participant_status_type ON civicrm_participant.status_id = civicrm_participant_status_type.id
-  						 LEFT JOIN civicrm_address ON civicrm_address.contact_id = civicrm_contact.id AND civicrm_address.is_primary = 1
+  						 LEFT JOIN civicrm_address ON civicrm_address.contact_id = civicrm_contact.id AND civicrm_address.location_type_id = %1
   						 LEFT JOIN civicrm_country ON civicrm_country.id = civicrm_address.country_id
   						 LEFT JOIN `{$config->getTeamDataCustomGroupTableName()}` ON `{$config->getTeamDataCustomGroupTableName()}`.entity_id = civicrm_participant.id
   						 LEFT JOIN civicrm_website website ON website.contact_id = civicrm_contact.id and website.website_type_id = {$config->getWebsiteWebsiteTypeId()}
@@ -138,11 +138,12 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 							 LEFT JOIN civicrm_website tumblr ON tumblr.contact_id = civicrm_contact.id and tumblr.website_type_id = {$config->getTumblrWebsiteTypeId()}
 							 LEFT JOIN civicrm_website twitter ON twitter.contact_id = civicrm_contact.id and twitter.website_type_id = {$config->getTwitterWebsiteTypeId()}
 							 LEFT JOIN civicrm_website vine ON vine.contact_id = civicrm_contact.id and vine.website_type_id = {$config->getVineWebsiteTypeId()}
-  						 WHERE civicrm_contact.id = %1 
+  						 WHERE civicrm_contact.id = %2 
   						 AND civicrm_participant_status_type.class = 'Positive' AND civicrm_participant_status_type.is_active = 1
-  						 AND civicrm_participant.event_id = %2";
-	  $teamParams[1] = array($team_id, 'Integer');
-	  $teamParams[2] = array($event_id, 'Integer');
+  						 AND civicrm_participant.event_id = %3";
+		$teamParams[1] = array($config->getVestingsplaatsLocationTypeId(), 'Integer');
+	  $teamParams[2] = array($team_id, 'Integer');
+	  $teamParams[3] = array($event_id, 'Integer');
 		$teamDao = CRM_Core_DAO::executeQuery($teamSql, $teamParams);		
 		if($teamDao->fetch()) {
 			$team = array();
