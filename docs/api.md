@@ -147,7 +147,18 @@ Resultaat ziet er zo uit:
 
 Detail overzicht van een team geeft team informatie terug, de deelnemers, en alle donaties op naam van dit team.
 
-*Optioneel* kun je een het event_id meegegevn als je historische gegevens wil hebben.
+### Parameters
+
+Optionele parameters
+
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Parameter                   | Standaard waarde | Omschrijving                                                                                                                                                       |
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| event_id                    |                  | standaard het meest recente roparun event                                                                                                                          |
+| only_show_on_website        | 1                | Als deze op 0 staat worden alle deelnemers getoond; als deze op 1 staat alleen de deelnemers die dit hebben aangegeven in CiviCRM                                  |
+| only_show_donations_enabled | 0                | Als deze op 0 staat worden alle deelnemers getoond; als deze op 1 staat alleen de deelnemers die hebben aangegeven in CiviCRM dat gedoneerd mag worden op hun naam |
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
 
 ### Team informatie
 
@@ -280,13 +291,23 @@ Resultaat ziet er zo uit:
 
 Overzicht van leden van een team. 
 
-*Optioneel* kun je een het event_id meegegevn als je historische gegevens wil hebben.
-
 Van ieder teamlid wordt de volgende informatie teruggegeven:
 
 * Naam
 * Functie
 * Woonplaats
+
+### Parameters
+
+Optionele parameters
+
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Parameter                   | Standaard waarde | Omschrijving                                                                                                                                                       |
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| event_id                    |                  | standaard het meest recente roparun event                                                                                                                          |
+| only_show_on_website        | 0                | Als deze op 0 staat worden alle deelnemers getoond; als deze op 1 staat alleen de deelnemers die dit hebben aangegeven in CiviCRM                                  |
+| only_show_donations_enabled | 0                | Als deze op 0 staat worden alle deelnemers getoond; als deze op 1 staat alleen de deelnemers die hebben aangegeven in CiviCRM dat gedoneerd mag worden op hun naam |
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ### Hoe te gebruiken?
 
