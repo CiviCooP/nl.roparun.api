@@ -2,23 +2,23 @@
 
 class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 	
-	public function details($team_id, $event_id = null) {
+	public function details($team_id, $event_id = null, $onlyShowOnWebsite = false, $onlyDonations = false) {
 		$roparun_event_id = $event_id;
 		if (empty($roparun_event_id)) {
 			$roparun_event_id = $this->getCurrentRoparunEventId();
 		}
 		$team['info'] = $this->getTeamInfo($team_id, $roparun_event_id);
-		$team['members'] = $this->getTeamMembers($team_id, $roparun_event_id, true);
+		$team['members'] = $this->getTeamMembers($team_id, $roparun_event_id, true, $onlyShowOnWebsite, $onlyDonations);
 		$team['donations'] = $this->getDonations($team_id, $roparun_event_id);
 		return array($team_id => $team);
 	}
 	
-	public function members($team_id, $event_id = null) {
+	public function members($team_id, $event_id = null, $onlyShowOnWebsite = false, $onlyDonations = false) {
 		$roparun_event_id = $event_id;
 		if (empty($roparun_event_id)) {
 			$roparun_event_id = $this->getCurrentRoparunEventId();
 		}
-		return $this->getTeamMembers($team_id, $roparun_event_id, false);
+		return $this->getTeamMembers($team_id, $roparun_event_id, false, $onlyShowOnWebsite, $onlyDonations);
 	}
 	
 	protected function getDonations($team_id, $event_id) {
@@ -62,7 +62,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		return $donations;
 	}
 	
-	protected function getTeamMembers($team_id, $event_id, $includeDonationTotals) {
+	protected function getTeamMembers($team_id, $event_id, $includeDonationTotals, $onlyShowOnWebsite, $onlyDonationsEnabled) {
 		$config = CRM_Api_RoparunConfig::singleton();
 		$campaign_id = $this->getRoparunCampaignId($event_id);
 		
@@ -76,11 +76,20 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			INNER JOIN {$config->getTeamMemberDataCustomGroupTableName()} team_member_data ON team_member_data.entity_id = civicrm_participant.id
 			LEFT JOIN civicrm_address ON civicrm_address.contact_id = civicrm_contact.id AND civicrm_address.is_primary = 1
 			WHERE team_member_data.{$config->getMemberOfTeamCustomFieldColumnName()} = %1
-			AND civicrm_participant.event_id = %2 
-			ORDER BY civicrm_contact.display_name	
-		";
+			AND civicrm_participant.event_id = %2";
 		$params[1] = array($team_id, 'Integer');
 		$params[2] = array($event_id, 'Integer');
+		if ($onlyShowOnWebsite) {
+			$teamMemberSql .= " AND team_member_data.{$config->getShowOnWebsiteCustomFieldColumnName()} = 1";	
+		}
+		if ($onlyDonationsEnabled) {
+			$teamMemberSql .= " AND team_member_data.{$config->getDonationsCustomFieldColumnName()} = 1";
+		}
+		
+		$teamMemberSql .= "
+			ORDER BY civicrm_contact.display_name	
+		";
+		
 		$teamMembers = array();
 		$teamMembersDao = CRM_Core_DAO::executeQuery($teamMemberSql, $params);
 		while ($teamMembersDao->fetch()) {

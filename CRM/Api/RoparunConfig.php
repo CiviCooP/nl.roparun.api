@@ -46,6 +46,10 @@ class CRM_Api_RoparunConfig {
 	private $_memberOfTeamCustomFieldColumnName;
 	private $_teamRoleCustomFieldId;
 	private $_teamRoleCustomFieldColumnName;
+	private $_showOnWebsiteCustomFieldId;
+	private $_showOnWebsiteCustomFieldColumnName;
+	private $_donationsCustomFieldId;
+	private $_donationsCustomFieldColumnName;
 	private $_donateAnonymousOptionValue;
 	private $_teamParticipantRoleId;
 	private $_teammemberParticipantRoleId;
@@ -302,6 +306,34 @@ class CRM_Api_RoparunConfig {
 	 */
 	public function getTeamRoleCustomFieldColumnName() {
 		return $this->_teamRoleCustomFieldColumnName;
+	}
+	
+	/**
+	 * Getter for the id fo the custom field website.
+	 */
+	public function getShowOnWebsiteCustomField() {
+		return $this->_showOnWebsiteCustomFieldId;
+	}
+	
+	/**
+	 * Getter for the column name of the custom field website.
+	 */
+	public function getShowOnWebsiteCustomFieldColumnName() {
+		return $this->_showOnWebsiteCustomFieldColumnName;
+	}
+	
+	/**
+	 * Getter for the id of the custom field donations.
+	 */
+	public function getDonationsCustomFieldId() {
+		return $this->_donationsCustomFieldId;
+	}
+	
+	/**
+	 * Getter for the column name of the custom field donations.
+	 */
+	public function getDonationsCustomFieldColumnName() {
+		return $this->_donationsCustomFieldColumnName;
 	}
 	
 	/**
@@ -659,6 +691,20 @@ class CRM_Api_RoparunConfig {
 			$this->_teamRoleCustomFieldId = $_teamRoleCustomField['id'];
 		} catch (Exception $ex) {
 			throw new Exception('Could not find custom field Team role');
+		}
+		try {
+			$websiteCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'website', 'custom_group_id' => $this->_teamMemberDataCustomGroupId));
+			$this->_showOnWebsiteCustomFieldColumnName = $websiteCustomField['column_name'];
+			$this->_showOnWebsiteCustomFieldId = $websiteCustomField['id'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom field website');
+		}
+		try {
+			$_donationsCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'donations', 'custom_group_id' => $this->_teamMemberDataCustomGroupId));
+			$this->_donationsCustomFieldColumnName = $_donationsCustomField['column_name'];
+			$this->_donationsCustomFieldId = $_donationsCustomField['id'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom field Donations');
 		}
 	}
 	

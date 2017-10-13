@@ -20,6 +20,16 @@ function _civicrm_api3_roparun_team_Getdetails_spec(&$spec) {
     'title' => 'Event ID',
     'type' => CRM_Utils_Type::T_INT,
   );
+	$spec['only_show_on_website'] = array(
+    'api.required' => false,
+    'title' => 'Show onnly teammembers with show on website is true',
+    'type' => CRM_Utils_Type::T_BOOLEAN,
+  );
+	$spec['only_show_donations_enabled'] = array(
+    'api.required' => false,
+    'title' => 'Show only teammembers with donations enabled',
+    'type' => CRM_Utils_Type::T_BOOLEAN,
+  );
 }
 
 /**
@@ -37,6 +47,16 @@ function civicrm_api3_roparun_team_Getdetails($params) {
 	if (isset($params['event_id'])) {
 		$event_id = $params['event_id'];
 	}
-	$returnValues = $details->details($params['team_id'], $event_id);
+	
+	$onlyShowOnWebsite = true;
+	if (isset($params['only_show_on_website'])) {
+		$onlyShowOnWebsite = $params['only_show_on_website'] ? true : false;
+	}
+	$onlyShowDonations = false;
+	if (isset($params['only_show_donations_enabled'])) {
+		$onlyShowDonations = $params['only_show_donations_enabled'] ? true : false;
+	}
+	
+	$returnValues = $details->details($params['team_id'], $event_id, $onlyShowOnWebsite, $onlyShowDonations);
 	return civicrm_api3_create_success($returnValues, $params, 'RoparunTeam', 'Details');
 }
