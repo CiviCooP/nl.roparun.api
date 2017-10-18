@@ -71,7 +71,7 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 			$team['tumblr'] = $teamDao->tumblr;
 			$team['twitter'] = $teamDao->twitter;
 			$team['vine'] = $teamDao->vine;
-			$team['total_amount'] = $this->getTotalAmountDonatedForTeam($teamDao->id, $campaign_id);
+			$team['total_amount'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam($teamDao->id, $campaign_id);
 			
 			$teams[$teamDao->id] = $team;
 		}
@@ -86,9 +86,9 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 		$config = CRM_Api_RoparunConfig::singleton();
 		$campaign_id = $this->getRoparunCampaignId($roparun_event_id);
 		
-		$total['total_amount'] = $this->getTotalAmountDonated($campaign_id);
-		$total['total_amount_teams'] = $this->getTotalAmountDonatedForTeams($campaign_id);
-		$total['total_amount_roparun'] = $this->getTotalAmountDonatedForRoparun($campaign_id);
+		$total['total_amount'] = CRM_Generic_Teamstanden::getTotalAmountDonated($campaign_id);
+		$total['total_amount_teams'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeams($campaign_id);
+		$total['total_amount_roparun'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForRoparun($campaign_id);
 		
 		return $total;
 	}

@@ -99,7 +99,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			$teamMember['city'] = $teamMembersDao->city;
 			$teamMember['role'] = $teamMembersDao->role;
 			if ($includeDonationTotals) {
-				$teamMember['total_amount'] = $this->getTotalAmountDonatedForTeamMember($teamMembersDao->id, $campaign_id);
+				$teamMember['total_amount'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeamMember($teamMembersDao->id, $campaign_id);
 			}
 			$teamMembers[] = $teamMember;
 		}
@@ -172,11 +172,11 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			$team['tumblr'] = $teamDao->tumblr;
 			$team['twitter'] = $teamDao->twitter;
 			$team['vine'] = $teamDao->vine;
-			$team['total_amount'] = $this->getTotalAmountDonatedForTeam($teamDao->id, $campaign_id);
-			$team['total_amount_team'] = $this->getTotalAmountDonatedForTeam_OnlyTeam($teamDao->id, $campaign_id);
-			$team['total_amount_team_members'] = $this->getTotalAmountDonatedForTeam_TeamMembers($teamDao->id, $campaign_id);
-			$team['total_amount_collecte'] = $this->getTotalAmountDonatedForTeam_Collecte($teamDao->id, $campaign_id);
-			$team['total_amount_loterij'] = $this->getTotalAmountDonatedForTeam_Loterij($teamDao->id, $campaign_id);
+			$team['total_amount'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam($teamDao->id, $campaign_id);
+			$team['total_amount_team'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam_OnlyTeam($teamDao->id, $campaign_id);
+			$team['total_amount_team_members'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam_TeamMembers($teamDao->id, $campaign_id);
+			$team['total_amount_collecte'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam_Collecte($teamDao->id, $campaign_id);
+			$team['total_amount_loterij'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam_Loterij($teamDao->id, $campaign_id);
 			return $team;
 		} else {
 			throw new Exception('Could not find team');
