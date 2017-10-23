@@ -22,8 +22,9 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 	}
 	
 	protected function getDonations($team_id, $event_id) {
+		$generic_config = CRM_Generic_Config::singleton();
 		$config = CRM_Api_RoparunConfig::singleton();
-		$financialTypeIds[] = $config->getDonatieFinancialTypeId();
+		$financialTypeIds[] = $generic_config->getDonatieFinancialTypeId();
 		$campaign_id = $this->getRoparunCampaignId($event_id);
 		$donationsSql = "SELECT total_amount,
 										team_member.display_name as team_member, 
@@ -32,11 +33,11 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 										donor_info.{$config->getDonateAnonymousCustomFieldColumnName()} as anonymous_donation 
 										FROM civicrm_contribution
 										INNER JOIN civicrm_contact donor ON civicrm_contribution.contact_id = donor.id
-										INNER JOIN `{$config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
-										LEFT JOIN civicrm_contact as team_member ON team_member.id = donated_towards.{$config->getTowardsTeamMemberCustomFieldColumnName()}
+										INNER JOIN `{$generic_config->getDonatedTowardsCustomGroupTableName()}` donated_towards ON donated_towards.entity_id = civicrm_contribution.id
+										LEFT JOIN civicrm_contact as team_member ON team_member.id = donated_towards.{$generic_config->getTowardsTeamMemberCustomFieldColumnName()}
 										LEFT JOIN {$config->getDonorInformationCustomGroupTableName()} donor_info ON donor_info.entity_id = civicrm_contribution.id
 										LEFT JOIN civicrm_address address ON donor.id = address.contact_id and address.is_primary = 1
-										WHERE donated_towards.{$config->getTowardsTeamCustomFieldColumnName()} = %1
+										WHERE donated_towards.{$generic_config->getTowardsTeamCustomFieldColumnName()} = %1
 										AND civicrm_contribution.campaign_id = %2
 										AND civicrm_contribution.is_test = 0
 										AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
@@ -44,7 +45,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 										";
 		$donationsParams[1] = array($team_id, 'Integer');
 		$donationsParams[2] = array($campaign_id, 'Integer');
-		$donationsParams[3] = array($config->getCompletedContributionStatusId(), 'Integer');
+		$donationsParams[3] = array($generic_config->getCompletedContributionStatusId(), 'Integer');
 		$donations = array();
 		$donationsDao = CRM_Core_DAO::executeQuery($donationsSql, $donationsParams);
 		while ($donationsDao->fetch()) {
