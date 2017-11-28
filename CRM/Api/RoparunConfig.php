@@ -26,6 +26,9 @@ class CRM_Api_RoparunConfig {
 	private $_teamNrCustomFieldColumnName;
 	private $_teamNameCustomFieldId;
 	private $_teamNameCustomFieldColumnName;
+	private $_startLocationCustomFieldId;
+	private $_startLocationCustomFieldColumnName;
+	private $_startLocationOptions;
 	private $_donorInformationCustomGroupId;
 	private $_donorInformationCustomGroupTableName;
 	private $_donateAnoymousCustomFieldId;
@@ -181,6 +184,27 @@ class CRM_Api_RoparunConfig {
 	 */
 	public function getTeamNameCustomFieldColumnName() {
 		return $this->_teamNameCustomFieldColumnName;
+	}
+	
+	/**
+	 * Getter for the id of the custom field start_location.
+	 */
+	public function getStartLocationCustomFieldId() {
+		return $this->_startLocationCustomFieldId;
+	}
+	
+	/**
+	 * Getter for the column name of the custom field start_location.
+	 */
+	public function getStartLocationCustomFieldColumnName() {
+		return $this->_startLocationCustomFieldColumnName;
+	}
+	
+	/**
+	 * Returns the options for the start_location custom field.
+	 */
+	public function getStartLocationOptions() {
+		return is_array($this->_startLocationOptions) ? $this->_startLocationOptions : array();
 	}
 	
 	/**
@@ -515,6 +539,15 @@ class CRM_Api_RoparunConfig {
 			$this->_teamNameCustomFieldId = $_teamNameCustomField['id'];
 		} catch (Exception $ex) {
 			throw new Exception('Could not find custom field Team Name');
+		}
+		try {
+			$_startLocationCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'start_location', 'custom_group_id' => $this->_teamDataCustomGroupId));
+			$this->_startLocationCustomFieldColumnName = $_startLocationCustomField['column_name'];
+			$this->_startLocationCustomFieldId = $_startLocationCustomField['id'];
+			$_startLocationOptions = civicrm_api3('Participant', 'getoptions', array('field' => "custom_".$this->_startLocationCustomFieldId));
+			$this->_startLocationOptions = $_startLocationOptions['values'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom field Start Location');
 		}
 		
 		try {

@@ -53,6 +53,7 @@ Per team geeft deze API de volgende gegevens terug:
 
 * Teamnaam
 * Teamnummer
+* Startlocatie
 * Vestigingsplaats
 * Vestigingsland
 * Facebook
@@ -93,6 +94,7 @@ Resultaat ziet er zo uit:
             "id": "25",
             "name": "Team CiviCooP Test",
             "teamnr": "2",
+            "start_location": "Hamburg",
             "city": "Ede",
             "country": "Netherlands",
             "website": "http://www.teamcivicoop-test.nl",
@@ -166,6 +168,7 @@ De team informatie bestaat uit:
 
 * Teamnaam
 * Teamnummer
+* Startlocatie
 * Vestigingsplaats
 * Vestigingsland
 * Facebook
@@ -227,6 +230,7 @@ Resultaat ziet er zo uit:
                 "id": "25",
                 "name": "Team CiviCooP Test",
                 "teamnr": 2,
+                "start_location": "Hamburg",
                 "city": null,
                 "country": null,
                 "website": "http://www.teamcivicoop-test.nl",

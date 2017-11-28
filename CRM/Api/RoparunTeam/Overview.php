@@ -8,12 +8,14 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 			$roparun_event_id = $this->getCurrentRoparunEventId();
 		}
 		$config = CRM_Api_RoparunConfig::singleton();
+		$start_location_options = $config->getStartLocationOptions();
 		$campaign_id = $this->getRoparunCampaignId($roparun_event_id);
 		
 		$teamSql = "SELECT civicrm_contact.id, 
   						 civicrm_contact.display_name,
   						 `{$config->getTeamDataCustomGroupTableName()}`.`{$config->getTeamNrCustomFieldColumnName()}` AS `team_nr`,
   						 `{$config->getTeamDataCustomGroupTableName()}`.`{$config->getTeamNameCustomFieldColumnName()}` AS `team_name`,
+  						 `{$config->getTeamDataCustomGroupTableName()}`.`{$config->getStartLocationCustomFieldColumnName()}` AS `start_location`,
   						 civicrm_address.city as city,
   						 civicrm_country.name as country,
   						 website.url as website,
@@ -58,6 +60,10 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 			$team['event_id'] = $roparun_event_id;
 			$team['name'] = $teamDao->team_name;
 			$team['teamnr'] = $teamDao->team_nr;
+			$team['start_location'] = $teamDao->start_location;
+			if (isset($start_location_options[$teamDao->start_location])) {
+				$team['start_location'] = $start_location_options[$teamDao->start_location];
+			}
 			$team['city'] = $teamDao->city;
 			$team['country'] = $teamDao->country;
 			$team['website'] = $teamDao->website;
