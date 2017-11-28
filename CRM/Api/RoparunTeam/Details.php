@@ -27,8 +27,13 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		$financialTypeIds[] = $generic_config->getDonatieFinancialTypeId();
 		$campaign_id = $this->getRoparunCampaignId($event_id);
 		$donationsSql = "SELECT total_amount,
-										team_member.display_name as team_member, 
-										donor.display_name as donor,
+										team_member.id as team_member_id,
+										team_member.first_name as team_member_first_name,
+										team_member.middle_name as team_member_middle_name,
+										team_member.last_name as team_member_last_name, 
+										donor.first_name as donor_first_name,
+										donor.middle_name as donor_middle_name,
+										donor.last_name as donor_last_name,
 										address.city as city,
 										donor_info.{$config->getDonateAnonymousCustomFieldColumnName()} as anonymous_donation 
 										FROM civicrm_contribution
@@ -50,9 +55,18 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		$donationsDao = CRM_Core_DAO::executeQuery($donationsSql, $donationsParams);
 		while ($donationsDao->fetch()) {
 			$donation = array();
-			$donation['donor'] = $donationsDao->donor;
+			$donor['first_name'] = $donationsDao->donor_first_name;
+			$donor['middle_name'] = $donationsDao->donor_middle_name;
+			$donor['last_name'] = $donationsDao->donor_last_name;
+			$donation['donor'] = $this->display_name($donor);
 			$donation['city'] = $donationsDao->city;
-			$donation['team_member'] = $donationsDao->team_member ? $donationsDao->team_member : "";
+			$donation['team_member'] = '';
+			if ($donationsDao->team_member_id) {
+				$team_member['first_name'] = $donationsDao->team_member_first_name;
+				$team_member['middle_name'] = $donationsDao->team_member_middle_name;
+				$team_member['last_name'] = $donationsDao->team_member_last_name;
+				$donation['team_member'] = $this->display_name($team_member);	
+			}
 			$donation['amount'] = $donationsDao->total_amount;
 			if ($donationsDao->anonymous_donation == $config->getDonateAnonymousOptionValue()) {
 				$donation['donor'] = ts('Anonymous');
@@ -69,7 +83,9 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		
 		$teamMemberSql = "
 			SELECT civicrm_contact.id, 
-			civicrm_contact.display_name, 
+			civicrm_contact.first_name,
+			civicrm_contact.middle_name,
+			civicrm_contact.last_name, 
 			civicrm_address.city as city,
 			team_member_data.{$config->getTeamRoleCustomFieldColumnName()} as role
 			FROM civicrm_contact
@@ -96,7 +112,10 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		while ($teamMembersDao->fetch()) {
 			$teamMember = array();
 			$teamMember['id'] = $teamMembersDao->id;
-			$teamMember['name'] = $teamMembersDao->display_name;
+			$contact['first_name'] = $teamMembersDao->first_name;
+			$contact['middle_name'] = $teamMembersDao->middle_name;
+			$contact['last_name'] = $teamMembersDao->last_name;
+			$teamMember['name'] = $this->display_name($contact);
 			$teamMember['city'] = $teamMembersDao->city;
 			$teamMember['role'] = $teamMembersDao->role;
 			if ($includeDonationTotals) {

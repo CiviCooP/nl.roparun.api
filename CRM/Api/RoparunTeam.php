@@ -35,5 +35,28 @@ class CRM_Api_RoparunTeam {
 		$campaign_id = CRM_Core_DAO::singleValueQuery("SELECT campaign_id FROM civicrm_event WHERE id = %1", $params);
 		return $campaign_id;  
 	}
+	
+	protected function display_name($contact) {
+		$display_name = '';
+		if (isset($contact['first_name'])) {
+			if (strlen($display_name)) {
+				$display_name .= ' ';
+			}
+			$display_name .= $contact['first_name'];
+		}
+		if (isset($contact['middle_name'])) {
+			if (strlen($display_name)) {
+				$display_name .= ' ';
+			}
+			$display_name .= $contact['middle_name'];
+		}
+		if (isset($contact['last_name'])) {
+			if (strlen($display_name)) {
+				$display_name .= ' ';
+			}
+			$display_name .= $contact['last_name'];
+		}
+		return trim($display_name);
+	}
 
 }
