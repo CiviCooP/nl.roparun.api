@@ -94,7 +94,7 @@ class CRM_Api_RoparunTeam_Overview extends CRM_Api_RoparunTeam {
 		
 		$total['total_amount'] = CRM_Generic_Teamstanden::getTotalAmountDonated($campaign_id);
 		$total['total_amount_teams'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeams($campaign_id, false);
-		$total['total_amount_roparun'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForRoparun($campaign_id);
+		$total['total_amount_roparun'] = CRM_Generic_Teamstanden::getTotalAmountForRoparun($campaign_id);
 		
 		return $total;
 	}
