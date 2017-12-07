@@ -8,19 +8,7 @@ class CRM_Api_RoparunTeam {
 	 * @return int 
 	 */
 	protected function getCurrentRoparunEventId() {
-		$config = CRM_Api_RoparunConfig::singleton();
-		$id = CRM_Core_DAO::singleValueQuery("
-			SELECT civicrm_event.id
-			FROM civicrm_event
-			INNER JOIN `{$config->getRoparunEventCustomGroupTableName()}` ON `{$config->getRoparunEventCustomGroupTableName()}`.entity_id = civicrm_event.id 
-			WHERE 
-				civicrm_event.event_type_id = '".$config->getRoparunEventTypeId()."'
-				AND DATE(`{$config->getRoparunEventCustomGroupTableName()}`.`{$config->getEndDateDonationsCustomFieldColumnName()}`) > NOW()
-		");
-		if (!$id) {
-			throw new Exception('Could not find an active Roparun Event');
-		}
-		return $id;
+		return CRM_Generic_CurrentEvent::getCurrentRoparunEventId();
 	}
 	
 	/**
@@ -31,9 +19,7 @@ class CRM_Api_RoparunTeam {
 	 * @return int
 	 */
 	protected function getRoparunCampaignId($event_id) {
-		$params[1] = array($event_id, 'Integer');
-		$campaign_id = CRM_Core_DAO::singleValueQuery("SELECT campaign_id FROM civicrm_event WHERE id = %1", $params);
-		return $campaign_id;  
+		return CRM_Generic_CurrentEvent::getRoparunCampaignId($event_id);
 	}
 	
 	protected function display_name($contact) {

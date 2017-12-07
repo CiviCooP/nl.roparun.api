@@ -15,11 +15,6 @@ class CRM_Api_RoparunConfig {
 	private $_tumblrWebsiteTypeId;
 	private $_vineWebsiteTypeId;
 	private $_websiteWebsiteTypeId;
-	private $_roparunEventTypeId;
-	private $_roparunEventCustomGroupId;
-	private $_roparunEventCustomGroupTableName;
-	private $_endDateDonationsCustomFieldId;
-	private $_endDateDonationsCustomFieldColumnName;
 	private $_teamDataCustomGroupId;
 	private $_teamDataCustomGroupTableName;
 	private $_teamNrCustomFieldId;
@@ -51,15 +46,6 @@ class CRM_Api_RoparunConfig {
 	private function __construct() {
 		$this->loadWebsiteTypes();
 		$this->loadCustomGroups();
-		try {
-			$this->_roparunEventTypeId = civicrm_api3('OptionValue', 'getvalue', array(
-				'return' => 'value',
-				'name' => 'Roparun',
-				'option_group_id' => 'event_type',
-			));
-		} catch (Exception $ex) {
-			throw new Exception ('Could not retrieve the Roparun Event Type');
-		}
 		
 		try {
 			$this->_teamParticipantRoleId = civicrm_api3('OptionValue', 'getvalue', array(
@@ -107,41 +93,6 @@ class CRM_Api_RoparunConfig {
 			self:: $singleton = new CRM_Api_RoparunConfig();
 		}
 		return self::$singleton;
-	}
-	
-	/** 
-	 * Getter for the Roparun event type id.
-	 */
-	public function getRoparunEventTypeId() {
-		return $this->_roparunEventTypeId;
-	}
-	
-	/**
-	 * Getter for the custom group id of the custom group 'roparun event'.
-	 */
-	public function getRoparunEventCustomGroupId() {
-		return $this->_roparunEventCustomGroupId;
-	}
-	
-	/**
-	 * Getter for the custom group table name of the custom group 'roparun event'.
-	 */
-	public function getRoparunEventCustomGroupTableName() {
-		return $this->_roparunEventCustomGroupTableName;
-	}
-	
-	/**
-	 * Getter for the custom field id of the custom field end date donations.
-	 */
-	public function getEndDateDonationsCustomFieldId() {
-		return $this->_endDateDonationsCustomFieldId;
-	}
-	
-	/**
-	 * Getter for the custom field column name of the custom field end date donations.
-	 */
-	public function getEndDateDonationsCustomFieldColumnName() {
-		return $this->_endDateDonationsCustomFieldColumnName;
 	}
 	
 	/**
@@ -504,21 +455,6 @@ class CRM_Api_RoparunConfig {
 	}
 
 	private function loadCustomGroups() {
-		try {
-			$_roparunEventCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'roparun_event'));
-			$this->_roparunEventCustomGroupId = $_roparunEventCustomGroup['id'];
-			$this->_roparunEventCustomGroupTableName = $_roparunEventCustomGroup['table_name'];
-		} catch (Exception $ex) {
-			throw new Exception('Could not find custom group for roparun events');
-		}
-		try {
-			$_roparunEndDateDonationsCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'end_date_donations', 'custom_group_id' => $this->_roparunEventCustomGroupId));
-			$this->_endDateDonationsCustomFieldColumnName = $_roparunEndDateDonationsCustomField['column_name'];
-			$this->_endDateDonationsCustomFieldId = $_roparunEndDateDonationsCustomField['id'];
-		} catch (Exception $ex) {
-			throw new Exception('Could not find custom field End Date Donations');
-		}
-
 		try {
 			$_teamDataCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'team_data'));
 			$this->_teamDataCustomGroupId = $_teamDataCustomGroup['id'];
