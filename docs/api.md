@@ -347,4 +347,65 @@ Resultaat ziet er zo uit:
 }
 ````
 
+## RoparunTeam.getcapatin - Overzicht van alle team captains
+
+Overzicht van alle team captains. 
+
+Van ieder captain wordt de volgende informatie teruggegeven:
+
+* Naam
+* Functie
+* Woonplaats
+* Email adres
+* Team naam
+* Team nr.
+* contact_id
+* event_id
+* participant_id
+* team_id
+
+### Parameters
+
+Optionele parameters
+
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Parameter                   | Standaard waarde | Omschrijving                                                                                                                                                       |
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| event_id                    |                  | standaard het meest recente roparun event                                                                                                                          |
++-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+### Hoe te gebruiken?
+
+Een aaroep ziet er dan ongeveer zo uit:
+
+````
+http://roparun.local.com/sites/all/modules/civicrm/extern/rest.php?entity=RoparunTeam&action=getcaptains&api_key=userkey&key=sitekey
+````
+
+Resultaat ziet er zo uit:
+````
+     {
+
+
+    "is_error": 0,
+    "version": 3,
+    "count": 1,
+    "id": 25,
+    "values": [
+        {
+        		"contact_id": "987",
+            "participant_id": "13",
+            "event_id": "1",
+            "name": "Jan Jansen",
+            "city": "Amsterdam",
+            "role": "Teamcaptain",
+            "email": janjansen@example.com,
+            "team_id": "25",
+            "team": "Team CiviCooP",
+            "teamnr": "46"
+        }
+    ]
+}
+````
+
 
