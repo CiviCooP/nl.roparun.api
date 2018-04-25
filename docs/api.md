@@ -187,6 +187,7 @@ De team informatie bestaat uit:
 * Totale stand van donaties op naam van alleen team (en niet een teamlid)
 * Totale stand van donaties op naam van een teamlid
 * Totale stand loten verkoop
+* Totale stand sms donaties
 * Totale stand collecte
 
 ### Teamleden
@@ -248,6 +249,7 @@ Resultaat ziet er zo uit:
                 "total_amount_team": 10,
                 "total_amount_team_members": 220,
                 "total_amount_collecte": 1000,
+                "total_amount_collecte": 2.36,
                 "total_amount_loterij": 500
             },
             "members": [

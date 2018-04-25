@@ -203,6 +203,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			$team['total_amount_team_members'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam_TeamMembers($teamDao->id, $campaign_id);
 			$team['total_amount_collecte'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam_Collecte($teamDao->id, $campaign_id);
 			$team['total_amount_loterij'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam_Loterij($teamDao->id, $campaign_id);
+      $team['total_amount_sms'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeam_Sms($teamDao->id, $campaign_id);
 			return $team;
 		} else {
 			throw new Exception('Could not find team');
