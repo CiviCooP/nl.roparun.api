@@ -153,13 +153,12 @@ Detail overzicht van een team geeft team informatie terug, de deelnemers, en all
 
 Optionele parameters
 
-+-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
 | Parameter                   | Standaard waarde | Omschrijving                                                                                                                                                       |
-+-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| --------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | event_id                    |                  | standaard het meest recente roparun event                                                                                                                          |
 | only_show_on_website        | 1                | Als deze op 0 staat worden alle deelnemers getoond; als deze op 1 staat alleen de deelnemers die dit hebben aangegeven in CiviCRM                                  |
 | only_show_donations_enabled | 0                | Als deze op 0 staat worden alle deelnemers getoond; als deze op 1 staat alleen de deelnemers die hebben aangegeven in CiviCRM dat gedoneerd mag worden op hun naam |
-+-----------------------------+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 ### Team informatie
