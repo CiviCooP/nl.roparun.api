@@ -249,7 +249,7 @@ Resultaat ziet er zo uit:
                 "total_amount_team": 10,
                 "total_amount_team_members": 220,
                 "total_amount_collecte": 1000,
-                "total_amount_collecte": 2.36,
+                "total_amount_sms": 2.36,
                 "total_amount_loterij": 500
             },
             "members": [
