@@ -257,6 +257,7 @@ Resultaat ziet er zo uit:
                     "name": "Sven Kramer",
                     "city": null,
                     "role": "Chaffeur",
+                    "is_team_captain": 0,
                     "total_amount": 210
                 },
                 {
@@ -264,6 +265,7 @@ Resultaat ziet er zo uit:
                     "name": "Mark Tuitert",
                     "city": "Kamerik",
                     "role": "Teamcaptain",
+                    "is_team_captain": 1
                     "total_amount": 10
                 }
             ],
@@ -300,6 +302,7 @@ Van ieder teamlid wordt de volgende informatie teruggegeven:
 
 * Naam
 * Functie
+* Is Team Captain: Ja/Nee
 * Woonplaats
 
 ### Parameters
@@ -333,16 +336,18 @@ Resultaat ziet er zo uit:
     "id": 25,
     "values": [
         {
-        		"id": 26,
+        	"id": 26,
             "name": "Sven Kramer",
             "city": null,
             "role": "Chaffeur",
+            "is_team_captain": 0
         },
         {
-        		"id": 27,
+        	"id": 27,
             "name": "Mark Tuitert",
             "city": "Kamerik",
-            "role": "Teamcaptain",
+            "role": "Loper",
+            "is_team_captain": 1
         }
     ]
 }

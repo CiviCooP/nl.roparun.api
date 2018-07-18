@@ -42,10 +42,17 @@ class CRM_Api_RoparunConfig {
 	private $_teamParticipantRoleId;
 	private $_teammemberParticipantRoleId;
 	private $_vestigingsLocationTypeId;
+	private $_teamCaptainRelationshipTypeId;
 	
 	private function __construct() {
 		$this->loadWebsiteTypes();
 		$this->loadCustomGroups();
+
+		try {
+		  $this->_teamCaptainRelationshipTypeId = civicrm_api3('RelationshipType', 'getvalue', array('name_b_a' => 'Teamcaptain is', 'return' => 'id'));
+    } catch (Exception $e) {
+		  throw new Exception('Could not find relationship type team captain');
+    }
 		
 		try {
 			$this->_teamParticipantRoleId = civicrm_api3('OptionValue', 'getvalue', array(
@@ -350,6 +357,13 @@ class CRM_Api_RoparunConfig {
 	public function getVestingsplaatsLocationTypeId() {
 		return $this->_vestigingsLocationTypeId;
 	}
+
+  /**
+   * Getter for the relationship type id.
+   */
+	public function getTeamCaptainRelationshipTypeId() {
+	  return $this->_teamCaptainRelationshipTypeId;
+  }
 	
 	private function loadWebsiteTypes() {
 		try {

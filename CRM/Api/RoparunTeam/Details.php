@@ -87,15 +87,23 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			civicrm_contact.middle_name,
 			civicrm_contact.last_name, 
 			civicrm_address.city as city,
-			team_member_data.{$config->getTeamRoleCustomFieldColumnName()} as role
+			team_member_data.{$config->getTeamRoleCustomFieldColumnName()} as role,
+			(CASE
+			  WHEN civicrm_relationship.id IS NOT NULL THEN 1
+			  ELSE 0 
+			END) AS is_team_captain
 			FROM civicrm_contact
 			INNER JOIN civicrm_participant ON civicrm_contact.id = civicrm_participant.contact_id
 			INNER JOIN {$config->getTeamMemberDataCustomGroupTableName()} team_member_data ON team_member_data.entity_id = civicrm_participant.id
 			LEFT JOIN civicrm_address ON civicrm_address.contact_id = civicrm_contact.id AND civicrm_address.is_primary = 1
+			LEFT JOIN civicrm_relationship ON civicrm_relationship.contact_id_a = civicrm_contact.id
 			WHERE team_member_data.{$config->getMemberOfTeamCustomFieldColumnName()} = %1
-			AND civicrm_participant.event_id = %2";
+			AND civicrm_participant.event_id = %2
+			AND civicrm_relationship.relationship_type_id = %3
+			AND is_active = 1 AND (start_date IS NULL OR start_date <= CURRENT_DATE()) AND (end_date IS NULL OR end_date >= CURRENT_DATE())";
 		$params[1] = array($team_id, 'Integer');
 		$params[2] = array($event_id, 'Integer');
+		$params[3] = array($config->getTeamCaptainRelationshipTypeId(), 'Integer');
 		if ($onlyShowOnWebsite) {
 			$teamMemberSql .= " AND team_member_data.{$config->getShowOnWebsiteCustomFieldColumnName()} = 1";	
 		}
@@ -118,6 +126,7 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			$teamMember['name'] = $this->display_name($contact);
 			$teamMember['city'] = $teamMembersDao->city;
 			$teamMember['role'] = $teamMembersDao->role;
+			$teamMember['is_team_captain'] = $teamMembersDao->is_team_captain;
 			if ($includeDonationTotals) {
 				$teamMember['total_amount'] = CRM_Generic_Teamstanden::getTotalAmountDonatedForTeamMember($teamMembersDao->id, $campaign_id);
 			}
