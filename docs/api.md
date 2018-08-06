@@ -59,14 +59,7 @@ Per team geeft deze API de volgende gegevens terug:
 * Facebook
 * Twitter
 * Website
-* Google Plus
 * Instagram
-* MySpace
-* LinkedIn
-* Pinterest
-* Tumblr
-* SnapChat
-* Vine
 * Contact ID van het team
 * Totale stand van donaties op naam van dit team
 
@@ -99,15 +92,8 @@ Resultaat ziet er zo uit:
             "country": "Netherlands",
             "website": "http://www.teamcivicoop-test.nl",
             "facebook": "https://facebook.com/teamcivicoop-test",
-            "googleplus": "",
             "instagram": "https://www.instagram.com/teamcivicoop-test",
-            "linkedin": "",
-            "myspace": "",
-            "pinterest": "",
-            "snapchat": "",
-            "tumblr": "",
             "twitter": "https://twitter.com/teamcivicoop-test",
-            "vine": "",
             "total_amount": "100"
     }
   ]
@@ -173,14 +159,7 @@ De team informatie bestaat uit:
 * Facebook
 * Twitter
 * Website
-* Google Plus
 * Instagram
-* MySpace
-* LinkedIn
-* Pinterest
-* Tumblr
-* SnapChat
-* Vine
 * Contact ID van het team
 * Totale stand van donaties op naam van dit team
 * Totale stand van donaties op naam van alleen team (en niet een teamlid)
@@ -235,15 +214,8 @@ Resultaat ziet er zo uit:
                 "country": null,
                 "website": "http://www.teamcivicoop-test.nl",
                 "facebook": "https://facebook.com/teamcivicoop-test",
-                "googleplus": null,
                 "instagram": "https://www.instagram.com/teamcivicoop-test",
-                "linkedin": null,
-                "myspace": null,
-                "pinterest": null,
-                "snapchat": null,
-                "tumblr": null,
                 "twitter": "https://twitter.com/teamcivicoop-test",
-                "vine": null,
                 "total_amount": 1730,
                 "total_amount_team": 10,
                 "total_amount_team_members": 220,
