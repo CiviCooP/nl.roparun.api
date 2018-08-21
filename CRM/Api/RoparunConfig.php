@@ -29,8 +29,6 @@ class CRM_Api_RoparunConfig {
 	private $_teamRoleCustomFieldColumnName;
 	private $_showOnWebsiteCustomFieldId;
 	private $_showOnWebsiteCustomFieldColumnName;
-	private $_donationsCustomFieldId;
-	private $_donationsCustomFieldColumnName;
 	private $_donateAnonymousOptionValue;
 	private $_teamParticipantRoleId;
 	private $_teammemberParticipantRoleId;
@@ -236,20 +234,6 @@ class CRM_Api_RoparunConfig {
 	}
 	
 	/**
-	 * Getter for the id of the custom field donations.
-	 */
-	public function getDonationsCustomFieldId() {
-		return $this->_donationsCustomFieldId;
-	}
-	
-	/**
-	 * Getter for the column name of the custom field donations.
-	 */
-	public function getDonationsCustomFieldColumnName() {
-		return $this->_donationsCustomFieldColumnName;
-	}
-	
-	/**
 	 * Getter for custom field column name for donate anonymous.
 	 */
 	public function getDonateAnonymousCustomFieldColumnName() {
@@ -428,13 +412,6 @@ class CRM_Api_RoparunConfig {
 			$this->_showOnWebsiteCustomFieldId = $websiteCustomField['id'];
 		} catch (Exception $ex) {
 			throw new Exception('Could not find custom field website');
-		}
-		try {
-			$_donationsCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'donations', 'custom_group_id' => $this->_teamMemberDataCustomGroupId));
-			$this->_donationsCustomFieldColumnName = $_donationsCustomField['column_name'];
-			$this->_donationsCustomFieldId = $_donationsCustomField['id'];
-		} catch (Exception $ex) {
-			throw new Exception('Could not find custom field Donations');
 		}
 	}
 	

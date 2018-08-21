@@ -2,23 +2,23 @@
 
 class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 	
-	public function details($team_id, $event_id = null, $onlyShowOnWebsite = false, $onlyDonations = false) {
+	public function details($team_id, $event_id = null, $includeTeamMembersWithDonations = true) {
 		$roparun_event_id = $event_id;
 		if (empty($roparun_event_id)) {
 			$roparun_event_id = $this->getCurrentRoparunEventId();
 		}
 		$team['info'] = $this->getTeamInfo($team_id, $roparun_event_id);
-		$team['members'] = $this->getTeamMembers($team_id, $roparun_event_id, true, $onlyShowOnWebsite, $onlyDonations);
+		$team['members'] = $this->getTeamMembers($team_id, $roparun_event_id, true, $includeTeamMembersWithDonations);
 		$team['donations'] = $this->getDonations($team_id, $roparun_event_id);
 		return array($team_id => $team);
 	}
 	
-	public function members($team_id, $event_id = null, $onlyShowOnWebsite = false, $onlyDonations = false) {
+	public function members($team_id, $event_id = null, $includeTeamMembersWithDonations = true) {
 		$roparun_event_id = $event_id;
 		if (empty($roparun_event_id)) {
 			$roparun_event_id = $this->getCurrentRoparunEventId();
 		}
-		return $this->getTeamMembers($team_id, $roparun_event_id, false, $onlyShowOnWebsite, $onlyDonations);
+		return $this->getTeamMembers($team_id, $roparun_event_id, false, $includeTeamMembersWithDonations);
 	}
 	
 	protected function getDonations($team_id, $event_id) {
@@ -77,9 +77,11 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 		return $donations;
 	}
 	
-	protected function getTeamMembers($team_id, $event_id, $includeDonationTotals, $onlyShowOnWebsite, $onlyDonationsEnabled) {
+	protected function getTeamMembers($team_id, $event_id, $includeDonationTotals, $includeTeamMembersWithDonations) {
 		$config = CRM_Api_RoparunConfig::singleton();
+    $generic_config = CRM_Generic_Config::singleton();
 		$campaign_id = $this->getRoparunCampaignId($event_id);
+    $financialTypeIds[] = $generic_config->getDonatieFinancialTypeId();
 		
 		$teamMemberSql = "
 			SELECT civicrm_contact.id, 
@@ -96,25 +98,41 @@ class CRM_Api_RoparunTeam_Details extends CRM_Api_RoparunTeam {
 			INNER JOIN civicrm_participant ON civicrm_contact.id = civicrm_participant.contact_id
 			INNER JOIN {$config->getTeamMemberDataCustomGroupTableName()} team_member_data ON team_member_data.entity_id = civicrm_participant.id
 			LEFT JOIN civicrm_address ON civicrm_address.contact_id = civicrm_contact.id AND civicrm_address.is_primary = 1
-			LEFT JOIN civicrm_relationship ON civicrm_relationship.contact_id_a = civicrm_contact.id
+			LEFT JOIN civicrm_relationship ON civicrm_relationship.contact_id_a = civicrm_contact.id 
+			  AND civicrm_relationship.relationship_type_id = %3
+			  AND is_active = 1 
+			  AND (start_date IS NULL OR start_date <= CURRENT_DATE()) 
+			  AND (end_date IS NULL OR end_date >= CURRENT_DATE())
 			WHERE team_member_data.{$config->getMemberOfTeamCustomFieldColumnName()} = %1
 			AND civicrm_participant.event_id = %2
-			AND civicrm_relationship.relationship_type_id = %3
-			AND is_active = 1 AND (start_date IS NULL OR start_date <= CURRENT_DATE()) AND (end_date IS NULL OR end_date >= CURRENT_DATE())";
+			";
 		$params[1] = array($team_id, 'Integer');
 		$params[2] = array($event_id, 'Integer');
 		$params[3] = array($config->getTeamCaptainRelationshipTypeId(), 'Integer');
-		if ($onlyShowOnWebsite) {
-			$teamMemberSql .= " AND team_member_data.{$config->getShowOnWebsiteCustomFieldColumnName()} = 1";	
-		}
-		if ($onlyDonationsEnabled) {
-			$teamMemberSql .= " AND team_member_data.{$config->getDonationsCustomFieldColumnName()} = 1";
-		}
+		if ($includeTeamMembersWithDonations) {
+      $teamMemberSql .= " 
+      AND (
+        team_member_data.{$config->getShowOnWebsiteCustomFieldColumnName()} = 1
+        OR civicrm_contact.id IN (
+          SELECT  donated_towards.{$generic_config->getTowardsTeamMemberCustomFieldColumnName()} 
+          FROM civicrm_contribution
+          INNER JOIN {$generic_config->getDonatedTowardsCustomGroupTableName()} donated_towards ON donated_towards.entity_id = civicrm_contribution.id
+          WHERE
+          civicrm_contribution.campaign_id = %4
+          AND civicrm_contribution.is_test = 0
+          AND civicrm_contribution.financial_type_id IN (" . implode(",", $financialTypeIds) . ")
+          AND civicrm_contribution.contribution_status_id = %5
+          )
+      )";
+      $params[4] = array($campaign_id, 'Integer');
+      $params[5] = array($generic_config->getCompletedContributionStatusId(), 'Integer');
+    } else {
+      $teamMemberSql .= " AND team_member_data.{$config->getShowOnWebsiteCustomFieldColumnName()} = 1";
+    }
 		
 		$teamMemberSql .= "
 			ORDER BY civicrm_contact.display_name	
 		";
-		
 		$teamMembers = array();
 		$teamMembersDao = CRM_Core_DAO::executeQuery($teamMemberSql, $params);
 		while ($teamMembersDao->fetch()) {
