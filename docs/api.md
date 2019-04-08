@@ -35,9 +35,9 @@ Op de deelnemersregistratie staat ook het teamnummer en de teamnaam
 
 Deelnemers van een team staan geregistreed als deelnemer met de rol _Teamlid_ op het Roparun evenement. Op de registratie staat aan welk team ze deelnemen en met welke rol.
 
-### Donaties, Collecte en Loterij
+### Donaties, Collecte, Veiling en Loterij
 
-Een donatie, collecte en loterij zijn in CiviCRM als bijdrages vastgelegd met een apart financieel type. Bij de bijdrage geef je aan voor welk team het is en eventueel tbv van welk teamlid. 
+Een donatie, collecte, veilingopbrengst en loterij zijn in CiviCRM als bijdrages vastgelegd met een apart financieel type. Bij de bijdrage geef je aan voor welk team het is en eventueel tbv van welk teamlid. 
 De bijdrage is ook gekoppeld aan de campagne waar het evenement onder valt.  
 Bij bijdrages van het type donatie wordt ook vastgelegd of de naam van de donateur vermeld mag worden of deze anoniem moet blijven. 
 
@@ -166,6 +166,7 @@ De team informatie bestaat uit:
 * Totale stand loten verkoop
 * Totale stand sms donaties
 * Totale stand collecte
+* Totale stand veiling
 
 ### Teamleden
 
@@ -221,6 +222,7 @@ Resultaat ziet er zo uit:
                 "total_amount_collecte": 1000,
                 "total_amount_sms": 2.36,
                 "total_amount_loterij": 500
+                "total_amount_veiling": 150
             },
             "members": [
                 {
